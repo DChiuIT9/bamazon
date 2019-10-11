@@ -46,8 +46,25 @@ function inquiry() {
             message: "How many units would you like to purchase?",
             name: "units",
         }
-    ]).then(function (res) {
+    ]).then(function(ans, err) {
         // if (err) throw err;
-        console.log("Item ID: " + res.item_id + "\n" + "Quantities: " + res.units)
+        if (isNaN(ans.item_id) || isNaN(ans.units)) {
+            // return;
+            connection.end();
+            console.log("Incorrect input");
+            return;
+        }
+        console.log("Item ID: " + ans.item_id + "\n");
+        connection.query("SELECT * FROM products", function(err, res) {
+            if (err) throw err;
+            var total = parseFloat(res[ans.item_id-1].price) * parseFloat(ans.units);
+            console.log("Product: " + res[ans.item_id-1].product_name +
+                "\nCategory: " + res[ans.item_id-1].department_name +
+                "\nIndividual Price: " + res[ans.item_id-1].price +
+                "\nQuantity Purchased: " + ans.units +
+                "\nTotal: " + total
+            
+            );
+        });
     })
 }
