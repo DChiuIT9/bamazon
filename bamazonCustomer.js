@@ -39,14 +39,15 @@ function inquiry() {
         {
             type: "number",
             message: "What is the ID of the product you would like to purchase?",
-            name: "firstquestion",
+            name: "item_id",
         },
         {
             type: "number",
             message: "How many units would you like to purchase?",
-            name: "secondquestion",
+            name: "units",
         }
     ]).then(function (res) {
-        console.log(res)
+        // if (err) throw err;
+        console.log("Item ID: " + res.item_id + "\n" + "Quantities: " + res.units)
     })
 }
